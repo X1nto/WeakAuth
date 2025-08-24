@@ -20,5 +20,18 @@ public class MainHook implements IXposedHookZygoteInit {
                 }
             }
         );
+
+        XposedHelpers.findAndHookMethod(
+            "com.android.keyguard.KeyguardUpdateMonitor",
+            null,
+            "isUnlockingWithBiometricAllowed",
+            boolean.class,
+            new XC_MethodHook() {
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) {
+                    param.setResult(true);
+                }
+            }
+        );
     }
 }
